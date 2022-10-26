@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Categorias</h1>
+    <p></p>
+</div>
+
+<a type="button" class="btn btn-success"
+                            href='@Url.Action("VerDetalleEquipo", "Privacy" )'>
+                                Ver equipo
+                            </a>
+
+<div class="container m-auto" style= "border: solid black 2px">
+    <div class="row">
+        @foreach (Categoria p in ViewBag.categorias)
+        {
+
+            <div class="card mb-2" style="max-width: 48%; margin-right:0.5%; border: solid black 2px">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@p.Nombre</h5>
+                            
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        }
+    </div>
+</div>
+
+
