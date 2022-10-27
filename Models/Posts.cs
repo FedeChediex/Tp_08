@@ -7,8 +7,9 @@ public class Post
     private string _titulo;
     private string _imagen;
     private string _contenido;
-   
     private int _idCategoria;
+    private int _idUsuario;
+
 
 
     public int IdPost{
@@ -60,6 +61,16 @@ public class Post
         }
         set{
             _idCategoria = value;
+        }
+
+    }
+    public int IdUsuario{
+        
+        get{
+            return _idUsuario;
+        }
+        set{
+            _idUsuario = value;
         }
 
     }

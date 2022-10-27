@@ -8,6 +8,7 @@ public class Comentario
     private string _imagen;
     private DateTime _tiempo;
     private int _idPost;
+    private int _idUsuario;
 
 
 
@@ -59,6 +60,16 @@ public class Comentario
         }
         set{
             _idPost = value;
+        }
+
+    }
+    public int IdUsuario{
+        
+        get{
+            return _idUsuario;
+        }
+        set{
+            _idUsuario= value;
         }
 
     }

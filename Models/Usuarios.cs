@@ -1,11 +1,24 @@
-public class Categoria
+public class Usuario
 {
 
     private int _idUsuario;
     private string _nombre;
-    private string _contraseña;
+    private string _contrasenia;
 
+    public Usuario(string nombre, string contrasenia)
+    {
 
+        _contrasenia = contrasenia;
+        _nombre = nombre;
+        
+
+    }
+    public Usuario()
+        {
+            _nombre = "Todavia no hay un nombre ingresado";
+            _contrasenia = "Todavia no hay un contraseña ingresado";
+
+        }
     public int IdUsuario{
         
         get{
@@ -26,13 +39,13 @@ public class Categoria
         }
 
     }
-    public string Contraseña{
+    public string Contrasenia{
         
         get{
-            return _contraseña;
+            return _contrasenia;
         }
         set{
-            _contraseña = value;
+            _contrasenia = value;
         }
 
     }

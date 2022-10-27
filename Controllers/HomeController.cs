@@ -12,10 +12,46 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
+    public IActionResult Registrarse()
+    {
 
-    public IActionResult Index()
+        return View();
+    }
+    public IActionResult InicioSesion(Usuario usuario)
+    {
+
+        return View();
+    }
+    public IActionResult GuardarUsuario(string Nombre, string Contrasenia)
+    {
+        Usuario usuario = new Usuario(Nombre,Contrasenia);
+        BD.IngresarUsuario(usuario);
+
+        return RedirectToAction("InicioSesion");
+    }
+    public IActionResult ValidarUsuario(string Nombre, string Contrasenia)
+    {
+        
+        foreach(Usuario user in BD.ObtenerUsuarios())
+        {
+            if (user.Nombre == Nombre)
+            {
+                if(user.Contrasenia == Contrasenia){
+                    return RedirectToAction("Index", new{IdUsuario = user.IdUsuario});
+                } 
+            }
+        }
+        return View("InicioSesion");
+        
+    }
+
+        
+    
+    
+    public IActionResult Index(int IdUsuario)
     {
         ViewBag.categorias = BD.ObtenerCategorias();
+        ViewBag.Usuario = BD.ObtenerUsuario(IdUsuario);
         return View();
     }
 

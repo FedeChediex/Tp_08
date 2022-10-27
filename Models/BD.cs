@@ -4,7 +4,7 @@ using Dapper;
 
 public class BD
 {
-    private static string _connectionString = @"Server=A-PHZ2-AMI-013;DataBase=Tp_08;Trusted_Connection=True";
+    private static string _connectionString = @"Server=DESKTOP-ODKGGP8\SQLEXPRESS;DataBase=Tp_08;Trusted_Connection=True";
 
     public static List<Categoria> ObtenerCategorias()
     {
@@ -37,5 +37,40 @@ public class BD
             ListaComentarios= bd.Query<Comentario>(sql, new { uIdPost =  IdPost }).ToList();
         }
         return ListaComentarios;
+    }
+
+    //INGRESO USUARIO
+    public static Usuario ObtenerUsuario(int IdUsuario)
+        {
+            Usuario user;
+            string SQL = "SELECT * FROM Usuario WHERE IdUsuario = @pIdUsuario ";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                user= db.QueryFirstOrDefault<Usuario>(SQL, new{pIdUsuario = IdUsuario});
+            }
+            return user;
+        }
+
+    public static List<Usuario> ObtenerUsuarios()
+    {
+        List<Usuario> lista = new List<Usuario>();
+        string sql = "SELECT * FROM Usuario";
+        using (SqlConnection bd = new SqlConnection(_connectionString))
+        {
+
+            lista = bd.Query<Usuario>(sql).ToList();
+        }
+        return lista;
+    }
+    //REGISTRO USUARIO
+    public static void IngresarUsuario(Usuario usuario)
+    {
+        
+        string sql = "INSERT INTO Usuario(Nombre, Contrasenia) VALUES (@pNombre, @pContrasenia)";
+        using (SqlConnection bd = new SqlConnection(_connectionString))
+        {
+
+            bd.Execute(sql, new{pNombre = usuario.Nombre, pContrasenia = usuario.Contrasenia});
+        }
     }
 }
