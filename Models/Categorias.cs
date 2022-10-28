@@ -6,28 +6,41 @@ public class Categoria
     private int _idCategoria;
     private string _nombre;
 
+    public Categoria(string nombre)
+    {
+        _nombre = nombre;
+    }
+    public Categoria()
+    {
+        _nombre = "";
+    }
+    
+    public int IdCategoria
+    {
 
-
-    public int IdCategoria{
-        
-        get{
+        get
+        {
             return _idCategoria;
         }
-        set{
+        set
+        {
             _idCategoria = value;
         }
 
     }
-    public string Nombre{
-        
-        get{
+    public string Nombre
+    {
+
+        get
+        {
             return _nombre;
         }
-        set{
+        set
+        {
             _nombre = value;
         }
 
     }
-   
-    
+
+
 }

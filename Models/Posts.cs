@@ -10,7 +10,23 @@ public class Post
     private int _idCategoria;
     private int _idUsuario;
 
+    public Post(string titulo, string imagen, string contenido, int idCategoria, int idUsuario)
+    {
 
+        _titulo = titulo;
+        _imagen = imagen;
+        _contenido = contenido;
+        _idCategoria = idCategoria;
+        _idUsuario = idUsuario;
+    }
+    public Post()
+    {
+         _titulo = "titulo";
+        _imagen = "imagen";
+        _contenido = "contenido";
+        _idCategoria = 0;
+        _idUsuario = 0;
+    }
 
     public int IdPost{
         

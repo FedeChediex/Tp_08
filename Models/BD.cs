@@ -6,7 +6,7 @@ public class BD
 {
     private static string _connectionString = @"Server=DESKTOP-ODKGGP8\SQLEXPRESS;DataBase=Tp_08;Trusted_Connection=True";
 
-    public static List<Categoria> ObtenerCategorias()
+    public static List<Categoria> ListarCategorias()
     {
         List<Categoria> lista = new List<Categoria>();
         string sql = "SELECT * FROM Categoria";
@@ -17,18 +17,17 @@ public class BD
         }
         return lista;
     }
-
-    public static List<Post> ObtenerPosts(int IdCategoria)
+    public static List<Post> ListarPosts(int IdCategoria)
     {
         List<Post> ListaPosts = new List<Post>();
-        string sql = "SELECT * FROM post WHERE IdPost = @uIdCategoria";
+        string sql = "SELECT * FROM Post WHERE IdCategoria = @pIdCategoria";
         using (SqlConnection bd = new SqlConnection(_connectionString))
         {
-            ListaPosts = bd.Query<Post>(sql, new { uIdCategoria =  IdCategoria }).ToList();
+            ListaPosts = bd.Query<Post>(sql, new { pIdCategoria =  IdCategoria }).ToList();
         }
         return ListaPosts;
     }
-   public static List<Comentario> ObtenerComentarios(int IdPost)
+    public static List<Comentario> ListarComentarios(int IdPost)
     {
         List<Comentario> ListaComentarios = new List<Comentario>();
         string sql = "SELECT * FROM post WHERE IdPost = @uIdPost";
@@ -38,8 +37,31 @@ public class BD
         }
         return ListaComentarios;
     }
+    public static List<Usuario> ListarUsuarios()
+    {
+        List<Usuario> lista = new List<Usuario>();
+        string sql = "SELECT * FROM Usuario";
+        using (SqlConnection bd = new SqlConnection(_connectionString))
+        {
 
-    //INGRESO USUARIO
+            lista = bd.Query<Usuario>(sql).ToList();
+        }
+        return lista;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //OBTENER//
+    public static Categoria ObtenerCategoria(int IdCategoria)
+    {
+            Categoria cat;
+            string SQL = "SELECT * FROM Categoria WHERE IdCategoria = @pIdCategoria ";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                cat = db.QueryFirstOrDefault<Categoria>(SQL, new{pIdCategoria = IdCategoria});
+                
+            }
+            return cat;
+    }
+
     public static Usuario ObtenerUsuario(int IdUsuario)
         {
             Usuario user;
@@ -51,17 +73,7 @@ public class BD
             return user;
         }
 
-    public static List<Usuario> ObtenerUsuarios()
-    {
-        List<Usuario> lista = new List<Usuario>();
-        string sql = "SELECT * FROM Usuario";
-        using (SqlConnection bd = new SqlConnection(_connectionString))
-        {
-
-            lista = bd.Query<Usuario>(sql).ToList();
-        }
-        return lista;
-    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     //REGISTRO USUARIO
     public static void IngresarUsuario(Usuario usuario)
     {
@@ -73,4 +85,15 @@ public class BD
             bd.Execute(sql, new{pNombre = usuario.Nombre, pContrasenia = usuario.Contrasenia});
         }
     }
+    public static void AgregarPost(Post post)
+    {
+        
+        string sql = "INSERT INTO Post(Titulo, Imagen, Contenido, IdCategoria, IdUsuario) VALUES (@pTitulo, @pImagen, @pContenido, @pIdCategoria, @pIdUsuario)";
+        using (SqlConnection bd = new SqlConnection(_connectionString))
+        {
+
+            bd.Execute(sql, new{pTitulo = post.Titulo, pImagen = post.Imagen, pContenido = post.Contenido,  pIdCategoria = post.IdCategoria, pIdUsuario = post.IdUsuario});
+        }
+    }
+
 }

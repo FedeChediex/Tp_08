@@ -1,4 +1,6 @@
-    
+    @{
+    ViewData["Title"] = "Registrarse";
+}
     <form action='@Url.Action("GuardarUsuario", "Home")' method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Nombre" name="Nombre" required>

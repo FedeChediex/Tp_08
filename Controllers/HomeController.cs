@@ -12,6 +12,8 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //INICIO DE SESION Y REGISTRO
     public IActionResult Registrarse()
     {
 
@@ -32,7 +34,7 @@ public class HomeController : Controller
     public IActionResult ValidarUsuario(string Nombre, string Contrasenia)
     {
         
-        foreach(Usuario user in BD.ObtenerUsuarios())
+        foreach(Usuario user in BD.ListarUsuarios())
         {
             if (user.Nombre == Nombre)
             {
@@ -45,13 +47,14 @@ public class HomeController : Controller
         
     }
 
-        
-    
-    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //PAGINA PRINCIPAL
     public IActionResult Index(int IdUsuario)
     {
-        ViewBag.categorias = BD.ObtenerCategorias();
-        ViewBag.Usuario = BD.ObtenerUsuario(IdUsuario);
+        ViewBag.categorias = BD.ListarCategorias();
+        ViewBag.IdUsuario = IdUsuario;
+        
         return View();
     }
 
@@ -59,18 +62,39 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult Posts(int IdCategoria)
+    //PAGINA PUBLICACIONES
+    public IActionResult Publicaciones(int IdCategoria, int IdUsuario)
     {
-        ViewBag.posts = BD.ObtenerPosts(IdCategoria);
-        return View();
+        ViewBag.IdCategoria = IdCategoria;
+        ViewBag.IdUsuario = IdUsuario;
+        ViewBag.posts = BD.ListarPosts(IdCategoria);
+        return View("VerPublicaciones");
     }
      public IActionResult VerPost(int IdPost)
     {
-        ViewBag.posts = BD.ObtenerComentarios(IdPost);
-        return View();
+        ViewBag.posts = BD.ListarComentarios(IdPost);
+        return View("Publicacion");
+    }
+     public IActionResult VerCategoria(int IdCategoria)
+    {
+        
+        return RedirectToAction("Publicaciones");
     }
 
-    
+     public IActionResult CrearPost(int IdCategoria, int IdUsuario)
+    {
+        ViewBag.IdCategoria = IdCategoria;
+        ViewBag.IdUsuario = IdUsuario;
+        return View("AgregarPost");
+    }
+    public IActionResult GuardarPost(string Titulo, string Imagen, string Contenido, int IdCategoria, int IdUsuario)
+    {
+        System.Console.WriteLine(IdCategoria);
+        Post post = new Post (Titulo, Imagen, Contenido, IdCategoria, IdUsuario);
+        BD.AgregarPost(post);
+        
+        return RedirectToAction("Publicaciones");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

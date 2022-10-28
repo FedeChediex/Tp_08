@@ -14,11 +14,10 @@ public class Usuario
 
     }
     public Usuario()
-        {
-            _nombre = "Todavia no hay un nombre ingresado";
-            _contrasenia = "Todavia no hay un contraseña ingresado";
-
-        }
+    {
+        _nombre = "Todavia no hay un nombre ingresado";
+        _contrasenia = "Todavia no hay un contraseña ingresado";
+    }
     public int IdUsuario{
         
         get{
