@@ -12,7 +12,9 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////
+
     //INICIO DE SESION Y REGISTRO
     public IActionResult Registrarse()
     {
@@ -62,40 +64,62 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
     //PAGINA PUBLICACIONES
     public IActionResult Publicaciones(int IdCategoria, int IdUsuario)
     {
         ViewBag.IdCategoria = IdCategoria;
         ViewBag.IdUsuario = IdUsuario;
-        ViewBag.posts = BD.ListarPosts(IdCategoria);
-        return View("VerPublicaciones");
-    }
-     public IActionResult VerPost(int IdPost)
-    {
-        ViewBag.posts = BD.ListarComentarios(IdPost);
-        return View("Publicacion");
-    }
-     public IActionResult VerCategoria(int IdCategoria)
-    {
-        
-        return RedirectToAction("Publicaciones");
+        ViewBag.Publicaciones = BD.ListarPosts(IdCategoria);
+        return View("VerCategoria");
     }
 
-     public IActionResult CrearPost(int IdCategoria, int IdUsuario)
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //CREAR POST
+    public IActionResult CrearPublicacion(int IdCategoria, int IdUsuario)
     {
         ViewBag.IdCategoria = IdCategoria;
         ViewBag.IdUsuario = IdUsuario;
         return View("AgregarPost");
     }
-    public IActionResult GuardarPost(string Titulo, string Imagen, string Contenido, int IdCategoria, int IdUsuario)
+    public IActionResult GuardarPublicacion(string Titulo, string Imagen, string Contenido, int IdCategoria, int IdUsuario)
     {
-        System.Console.WriteLine(IdCategoria);
+        
         Post post = new Post (Titulo, Imagen, Contenido, IdCategoria, IdUsuario);
         BD.AgregarPost(post);
         
-        return RedirectToAction("Publicaciones");
+        return RedirectToAction("Publicaciones", new { IdCategoria = IdCategoria });
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //VER INFORMACION POST
+     public IActionResult VerPublicacion(int IdPost, int IdUsuario)
+    {
+        ViewBag.IdPost = IdPost;
+        ViewBag.IdUsuario = IdUsuario;
+       
+        ViewBag.Publicacion = BD.ObtenerPost(IdPost);
+        ViewBag.comentarios = BD.ListarComentarios(IdPost);
+        return View("Publicacion");
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    //CREAR COMENTARIO
+    public IActionResult GuardarComentario(string Contenido, string Imagen, int IdPost,int IdUsuario)
+    {
+        DateTime Tiempo = DateTime.Now;
+        Comentario coment = new Comentario (Contenido, Imagen, Tiempo, IdPost, IdUsuario);
+        BD.AgregarComentario(coment);
+        
+        return RedirectToAction("VerPublicacion", new { IdPost = IdPost });
+    }
+
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

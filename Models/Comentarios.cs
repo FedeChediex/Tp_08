@@ -9,7 +9,22 @@ public class Comentario
     private DateTime _tiempo;
     private int _idPost;
     private int _idUsuario;
-
+    public Comentario(string contenido, string imagen, DateTime tiempo, int idPost, int idUsuario)
+    {
+        _contenido = contenido;
+        _imagen = imagen;
+        _tiempo = tiempo;
+        _idPost = idPost;
+        _idUsuario = idUsuario;
+    }
+    public Comentario()
+    {
+        _contenido = "contenido";
+        _imagen = "imagen";
+        _tiempo = new DateTime();
+        _idPost = 0;
+        _idUsuario = 0;
+    }
 
 
     public int IdComentario{

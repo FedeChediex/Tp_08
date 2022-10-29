@@ -3,15 +3,14 @@
 }
 
 <a type="button" class="btn btn-success"
-                        href='@Url.Action("CrearPost", "Home", new{ IdCategoria = @ViewBag.IdCategoria, IdUsuario = @ViewBag.IdUsuario} )'>
+                        href='@Url.Action("CrearPublicacion", "Home", new{ IdCategoria = @ViewBag.IdCategoria, IdUsuario = @ViewBag.IdUsuario} )'>
                             Crear Post
                         </a>
 
 <div class="container m-auto" style= "border: solid black 2px">
     <div class="row">
-        @foreach (Post p in ViewBag.posts)
+        @foreach (Post p in ViewBag.Publicaciones)
         {
-
             <div class="card mb-2" style="max-width: 48%; margin-right:0.5%; border: solid black 2px">
                 <div class="row no-gutters">
                     <div class="col-md-8">
@@ -21,7 +20,7 @@
                             
                         </div>
                         <a type="button" class="btn btn-success"
-                            href='@Url.Action("Post", "Home", new{ IdCategoria = @p.IdCategoria, IdUsuario = @ViewBag.IdUsuario} )'>
+                            href='@Url.Action("VerPublicacion", "Home", new{ IdPost = @p.IdPost, IdUsuario = @ViewBag.IdUsuario} )'>
                                 Ver equipo
                             </a>
                     </div>
@@ -29,8 +28,6 @@
                 </div>
 
             </div>
-
-
         }
     </div>
 </div>

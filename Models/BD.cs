@@ -72,9 +72,19 @@ public class BD
             }
             return user;
         }
+    public static Post ObtenerPost(int IdPost)
+        {
+            Post publicacion;
+            string SQL = "SELECT * FROM Post WHERE IdPost = @pIdPost ";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                publicacion= db.QueryFirstOrDefault<Post>(SQL, new{pIdPost = IdPost});
+            }
+            return publicacion;
+        }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    //REGISTRO USUARIO
+    //INSERT
     public static void IngresarUsuario(Usuario usuario)
     {
         
@@ -96,4 +106,14 @@ public class BD
         }
     }
 
+    public static void AgregarComentario(Comentario coment)
+    {
+        
+        string sql = "INSERT INTO comentario(Contenido, Imagen, Tiempo, IdPost, IdUsuario) VALUES (@pContenido, @pImagen, @pTiempo, @pIdPost, @pIdUsuario)";
+        using (SqlConnection bd = new SqlConnection(_connectionString))
+        {
+
+            bd.Execute(sql, new{pContenido = coment.Contenido, pImagen = coment.Imagen, pTiempo = coment.Tiempo,  pIdPost = coment.IdPost, pIdUsuario = coment.IdUsuario});
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class Post
     public Post()
     {
          _titulo = "titulo";
-        _imagen = "imagen";
+        _imagen = null;
         _contenido = "contenido";
         _idCategoria = 0;
         _idUsuario = 0;

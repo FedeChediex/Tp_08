@@ -1,0 +1,50 @@
+<div class="card mb-2" style="max-width: 48%; margin-right:0.5%; border: solid black 2px">
+                <div class="row no-gutters">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@ViewBag.Publicacion.Titulo</h5>
+                            @ViewBag.Publicacion.Contenido
+                            @ViewBag.Publicacion.Imagen
+                            
+                        </div>
+                        
+                    </div>
+
+                </div>
+</div>
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action='@Url.Action("GuardarPublicacion", "Home")' method="post" enctype="multipart/form-data">
+        
+        <input class="form-control" type="hidden" name="IdPost" id="IdPost" value="@ViewBag.IdPost">
+        <input class="form-control" type="hidden" name="IdUsuario" id="IdUsuario" value="@ViewBag.IdUsuario">
+
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Contenido" name="Contenido" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control"  placeholder="Imagen" name="Imagen">
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
