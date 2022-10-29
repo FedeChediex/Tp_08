@@ -1,7 +1,6 @@
 <form action='@Url.Action("GuardarPublicacion", "Home")' method="post" enctype="multipart/form-data" >
     <input class="form-control" type="hidden" name="IdCategoria" id="IdCategoria" value="@ViewBag.IdCategoria">
     <input class="form-control" type="hidden" name="IdUsuario" id="IdUsuario" value="@ViewBag.IdUsuario">
-    
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Titulo" name="Titulo" required>
     </div>

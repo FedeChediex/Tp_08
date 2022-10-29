@@ -19,8 +19,8 @@ public class Comentario
     }
     public Comentario()
     {
-        _contenido = "contenido";
-        _imagen = "imagen";
+        _contenido = "null";
+        _imagen = "null";
         _tiempo = new DateTime();
         _idPost = 0;
         _idUsuario = 0;

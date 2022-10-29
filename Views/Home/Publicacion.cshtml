@@ -4,7 +4,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@ViewBag.Publicacion.Titulo</h5>
                             @ViewBag.Publicacion.Contenido
-                            @ViewBag.Publicacion.Imagen
+                            <img src="@ViewBag.Publicacion.Imagen">
                             
                         </div>
                         
@@ -27,24 +27,54 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action='@Url.Action("GuardarPublicacion", "Home")' method="post" enctype="multipart/form-data">
+        <form action='@Url.Action("GuardarComentario", "Home")' method="post" enctype="multipart/form-data">
         
         <input class="form-control" type="hidden" name="IdPost" id="IdPost" value="@ViewBag.IdPost">
         <input class="form-control" type="hidden" name="IdUsuario" id="IdUsuario" value="@ViewBag.IdUsuario">
 
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Contenido" name="Contenido" required>
+            <input type="text" class="form-control" placeholder="Contenido" name="Contenido" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control"  placeholder="Imagen" name="Imagen">
+            <input type="file" class="form-control-file" placeholder="Imagen" name="Imagen">
         </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-    </form>
+      <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+      </form>
       </div>
       <div class="modal-footer">
+          
+        
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+         
       </div>
     </div>
+  </div>
+</div>
+
+
+<div class="container m-auto" style= "border: solid black 2px">
+  <div class="row">
+    @foreach (Comentario p in ViewBag.comentarios)
+    {
+      <div class="card mb-2" style="max-width: 48%; margin-right:0.5%; border: solid black 2px">
+        <div class="row no-gutters">
+          <div class="col-md-8">
+            <div class="card-body">
+              <!--<h5 class="card-title">@p.IdUsuario</h5>-->
+              
+              @if(p.Imagen != "null")
+              {
+                <p>@p.Contenido</p>
+                <img src="/@p.Imagen">
+              }
+              else
+              {
+                <p>@p.Contenido</p>                
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    }
   </div>
 </div>

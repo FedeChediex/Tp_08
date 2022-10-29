@@ -7,10 +7,10 @@ namespace Tp_08_Federico_Joaquin.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private IWebHostEnvironment Environment;
+    public HomeController(IWebHostEnvironment environment)
     {
-        _logger = logger;
+        Environment = environment;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,12 +83,20 @@ public class HomeController : Controller
     {
         ViewBag.IdCategoria = IdCategoria;
         ViewBag.IdUsuario = IdUsuario;
+        
         return View("AgregarPost");
     }
-    public IActionResult GuardarPublicacion(string Titulo, string Imagen, string Contenido, int IdCategoria, int IdUsuario)
+    public IActionResult GuardarPublicacion(string Titulo, IFormFile Imagen, string Contenido, int IdCategoria, int IdUsuario)
     {
-        
-        Post post = new Post (Titulo, Imagen, Contenido, IdCategoria, IdUsuario);
+        if(Imagen.Length > 0)
+        {
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + Imagen.FileName;
+            using( var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Imagen.CopyToAsync(stream);
+            }
+        }
+        Post post = new Post (Titulo,("" + Imagen.FileName), Contenido, IdCategoria, IdUsuario);
         BD.AgregarPost(post);
         
         return RedirectToAction("Publicaciones", new { IdCategoria = IdCategoria });
@@ -101,7 +109,7 @@ public class HomeController : Controller
     {
         ViewBag.IdPost = IdPost;
         ViewBag.IdUsuario = IdUsuario;
-       
+
         ViewBag.Publicacion = BD.ObtenerPost(IdPost);
         ViewBag.comentarios = BD.ListarComentarios(IdPost);
         return View("Publicacion");
@@ -110,13 +118,21 @@ public class HomeController : Controller
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     //CREAR COMENTARIO
-    public IActionResult GuardarComentario(string Contenido, string Imagen, int IdPost,int IdUsuario)
+    public IActionResult GuardarComentario(string Contenido, IFormFile Imagen, int IdPost,int IdUsuario)
     {
         DateTime Tiempo = DateTime.Now;
-        Comentario coment = new Comentario (Contenido, Imagen, Tiempo, IdPost, IdUsuario);
+        if(Imagen.Length > 0)
+        {
+            string wwwRootLocal = this.Environment.ContentRootPath + @"\wwwroot\" + Imagen.FileName;
+            using( var stream = System.IO.File.Create(wwwRootLocal))
+            {
+                Imagen.CopyToAsync(stream);
+            }
+        }
+        Comentario coment = new Comentario (Contenido, ("" + Imagen.FileName), Tiempo, IdPost, IdUsuario);
         BD.AgregarComentario(coment);
         
-        return RedirectToAction("VerPublicacion", new { IdPost = IdPost });
+        return RedirectToAction("VerPublicacion", new { IdPost = IdPost, IdUsuario = IdUsuario});
     }
 
     

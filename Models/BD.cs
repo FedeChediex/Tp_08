@@ -30,7 +30,7 @@ public class BD
     public static List<Comentario> ListarComentarios(int IdPost)
     {
         List<Comentario> ListaComentarios = new List<Comentario>();
-        string sql = "SELECT * FROM post WHERE IdPost = @uIdPost";
+        string sql = "SELECT * FROM comentario WHERE IdPost = @uIdPost";
         using (SqlConnection bd = new SqlConnection(_connectionString))
         {
             ListaComentarios= bd.Query<Comentario>(sql, new { uIdPost =  IdPost }).ToList();
